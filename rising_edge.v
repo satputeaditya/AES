@@ -1,22 +1,37 @@
+//======================================================================
+//
 // rising_edge.v
+// ------------------
+//
+//======================================================================
 
-  //-------------------------------------------
-  // rising edge detect function
-  //-------------------------------------------
-    module rising_edge(
-						input clk,
-						input rst,
-						input signal_in,
-						output signal_out
-					);	
-    reg signal;					
-	assign signal_out = signal_in & (~ signal);
+  module rising_edge(
+			input 	clk,
+			input 	rst,
+			input 	signal_in,
+			output 	signal_out
+		);	
 
-	always@(posedge clk or posedge rst)
-		begin  
-				if(rst)
-					signal <= 'b0; 			
-				else
-					signal <= signal_in;			
-		end
-	endmodule
+  //----------------------------------------------------------------
+  // Output port signal assignments.
+  //----------------------------------------------------------------	  
+  assign signal_out = signal_in & (~ signal);	  
+  
+  //----------------------------------------------------------------
+  // Registers declarations.
+  //----------------------------------------------------------------
+  reg signal;				
+
+  //----------------------------------------------------------------
+  // rising_edge_detect
+  //----------------------------------------------------------------	  
+  always@(posedge clk or posedge rst)
+  begin : rising_edge_detect  
+	  if(rst) signal <= 'b0; 			
+	  else 	  signal <= signal_in;			
+  end //  rising_edge_detect
+	  
+  endmodule //  rising_edge
+//======================================================================
+// EOF rising_edge.v
+//======================================================================
